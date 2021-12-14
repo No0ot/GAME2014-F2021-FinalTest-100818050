@@ -13,7 +13,6 @@ public class ShrinkingPlatform : MonoBehaviour
 
     private void Start()
     {
-
         audioSource = GetComponent<AudioSource>();
     }
 
@@ -44,7 +43,6 @@ public class ShrinkingPlatform : MonoBehaviour
     private void FixedUpdate()
     {
         _Move();
-        
     }
     private void Shrink()
     {
