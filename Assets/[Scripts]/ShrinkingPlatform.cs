@@ -10,10 +10,13 @@ public class ShrinkingPlatform : MonoBehaviour
     public AudioClip shrinkSound;
     public AudioClip growSound;
 
+    Vector3 startPosition;
+
 
     private void Start()
     {
         audioSource = GetComponent<AudioSource>();
+        startPosition = transform.parent.transform.position;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -82,6 +85,8 @@ public class ShrinkingPlatform : MonoBehaviour
 
     private void _Move()
     {
-        transform.parent.transform.position = new Vector3(transform.parent.transform.position.x, Mathf.PingPong(Time.time * 0.5f, 1), transform.parent.transform.position.z);
+        float posY = startPosition.y + (1 * Mathf.PingPong(Time.time * 0.5f, 1));
+
+        transform.parent.transform.position = new Vector3(transform.parent.transform.position.x, posY, transform.parent.transform.position.z);
     }
 }
