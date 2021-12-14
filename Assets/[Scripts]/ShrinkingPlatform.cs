@@ -11,7 +11,9 @@ public class ShrinkingPlatform : MonoBehaviour
     public AudioClip growSound;
 
     Vector3 startPosition;
-
+    float initialScale;
+    float scalePercentage;
+    float shrinkTime;
 
     private void Start()
     {
@@ -25,6 +27,8 @@ public class ShrinkingPlatform : MonoBehaviour
         {
             grow = false;
             shrink = true;
+            shrinkTime = 0;
+            initialScale = transform.parent.transform.localScale.x;
         }
     }
 
@@ -34,6 +38,8 @@ public class ShrinkingPlatform : MonoBehaviour
         {
             grow = true;
             shrink = false;
+            shrinkTime = 0;
+            initialScale = transform.parent.transform.localScale.x;
         }
     }
 
@@ -53,7 +59,9 @@ public class ShrinkingPlatform : MonoBehaviour
         {
             if (transform.parent.transform.localScale.x > 0.01)
             {
-                transform.parent.transform.localScale = transform.parent.transform.localScale * 0.995f;
+                shrinkTime += Time.deltaTime / 2;
+                scalePercentage = Mathf.Lerp(initialScale, 0.01f, shrinkTime);
+                transform.parent.transform.localScale = new Vector3(scalePercentage,scalePercentage,scalePercentage);
                 audioSource.clip = shrinkSound;
                 if (!audioSource.isPlaying)
                     audioSource.Play();
@@ -69,17 +77,13 @@ public class ShrinkingPlatform : MonoBehaviour
         {
             if (transform.parent.transform.localScale.x < 1)
             {
-                transform.parent.transform.localScale = transform.parent.transform.localScale * 1.005f;
+                shrinkTime += Time.deltaTime;
+                scalePercentage = Mathf.Lerp(initialScale, 1f, shrinkTime);
+                transform.parent.transform.localScale = new Vector3(scalePercentage, scalePercentage, scalePercentage);
                 audioSource.clip = growSound;
                 if(!audioSource.isPlaying)
                     audioSource.Play();
             }
-            else if (transform.parent.transform.localScale.x > 1)
-            {
-                transform.parent.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
-                grow = false;
-            }
-
         }    
     }
 
