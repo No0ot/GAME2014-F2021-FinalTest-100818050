@@ -1,3 +1,11 @@
+//      Author          : Chris Tulip
+//      StudentID       : 100818050
+//      Date Modified   : December 14, 2021
+//      File            : ShrinkingPlatform.cs
+//      Description     : This controls the the shrinking platforms
+//      History         :   v0.5 - Added shrinking and floating movement
+//                          v0.8 - Added Sound Effects
+//                          v1.0 - Changed scaling to use lerp
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -53,6 +61,10 @@ public class ShrinkingPlatform : MonoBehaviour
     {
         _Move();
     }
+    /// <summary>
+    /// Shrinks the platform to 0.01f scale. Since lerp.t is a value between 0 and 1, divide Time.deletaTime by 2 to get rougly 2 seconds
+    /// Initial scale is set on collision so that the platform can shrink if its mid grow.
+    /// </summary>
     private void Shrink()
     {
         if(shrink)
@@ -86,7 +98,9 @@ public class ShrinkingPlatform : MonoBehaviour
             }
         }    
     }
-
+    /// <summary>
+    /// Used ping pong to make floating effect.
+    /// </summary>
     private void _Move()
     {
         float posY = startPosition.y + (1 * Mathf.PingPong(Time.time * 0.5f, 1));
